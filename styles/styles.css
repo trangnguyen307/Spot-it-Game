@@ -1,0 +1,61 @@
+body {
+   margin: 0px;
+   display: flex;
+   flex-direction: column;
+   background-image: url('../images/background2.gif');
+   background-repeat: no-repeat;
+   background-size: cover;
+}
+#intro {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: center;
+   /*width: 40%;*/
+   /*margin-right: 100px;*/
+   margin: auto;
+}
+img {
+   width: 100%;
+   
+}
+button {
+   width: 200px;
+   margin: 8px;
+   padding: 10px;
+   font-size: 20px;
+}
+#main-section {
+   display: flex;
+   flex-direction: column;
+   margin-bottom: 50px;
+   margin: auto;
+   margin-top: 30px;
+}
+header {
+   display: flex;
+   justify-content: space-around;
+}
+p {
+   border: 1px solid;
+   padding: 10px;
+   width: 100px;
+   text-align: center;
+}
+#points {
+   margin-left: 80px;
+}
+#time {
+   margin-right: 80px;
+}
+canvas {
+   margin-left: 100px;
+}
+/*#card-section {
+   display: flex;
+   flex-direction: column;
+   margin-bottom: 50px;
+}*/
+/*ection canvas {
+   border: 1px solid;
+}*/

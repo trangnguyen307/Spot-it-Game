@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spot it!</title>
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+    <!--<canvas width="Infinity" height="Infinity"></canvas>-->
+    <section id = "intro">
+        <img src="images/Spotit logo.png">
+        <button>START</button>
+        <button>How to play?</button>
+    </section>
+    
+    <section id ="main-section">
+        <header>
+            <p id="points">POINT: <span>0</span></p>
+            <p id="time">TIME: <span>0</span></p>
+        </header>
+        <section id = "card-section">
+            <canvas width='1300' height='650'></canvas>
+        </section>
+    </section>
+
+     <!-- LINK THE JAVASCRIPT FILES HERE -->
+     <script src="javascript/data.js"></script>
+     <script src="javascript/spotit.js"></script>
+</body>
+</html>
