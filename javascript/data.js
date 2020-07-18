@@ -80,7 +80,7 @@ var imageSpotIt = [
     {name:'doll', img:'doll.png'},
     {name:'dolphin', img:'dolphin.png'},
     {name:'dragon', img:'dragon.png'},
-    {name:'exclam', img:'exclam'},
+    {name:'exclam', img:'exclam.png'},
     {name:'eye', img:'eye.png'},
     {name:'fire', img:'fire.png'},
     {name:'flower', img:'flower.png'},
@@ -116,4 +116,15 @@ var imageSpotIt = [
     {name:'water', img:'water.png'},
     {name:'web', img:'web.png'},
     {name:'zebra', img:'zebra.png'}
+];
+
+const imagePosition1 = [
+    {x:220, y:80},
+    {x:330, y:140},
+    {x:370, y:250},
+    {x:300, y:350},
+    {x:180, y:370},
+    {x:90, y:280},
+    {x:100, y:140},
+    {x:220, y:230}  
 ];
