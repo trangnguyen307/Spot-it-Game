@@ -1,3 +1,4 @@
+let w, h;
 class Symbol {
     constructor(x,y,index) {
         this.x = x;
@@ -5,19 +6,20 @@ class Symbol {
         this.index = index; // index on imageSpotIt
     }
 
+   
     draw () {
         const image = document.createElement('img');
         image.src = 'images/' + imageSpotIt[this.index].img; 
         image.onload = () => { 
             const imgRatio = image.naturalWidth/image.naturalHeight;
-            const w=130;
-            const h=w/imgRatio;
+            w=130;
+            h=w/imgRatio;
             ctx.drawImage(image,this.x,this.y,w,h);
         }
     }
 
     isClicked (xClicked, yClicked) {
-        if (xClicked >= x && xClicked <= x+w && yClicked >= y && yClicked <= y+h ) {
+        if (xClicked >= this.x && xClicked <= this.x+w && yClicked >= this.y && yClicked <= this.y+h ) {
             return true;
         } else {
             return false;

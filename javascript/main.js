@@ -1,4 +1,5 @@
-const ctx = document.querySelector('canvas').getContext('2d');
+const myCanvas = document.querySelector('canvas');
+const ctx = myCanvas.getContext('2d');
 drawCard1();
 drawCard2();
 const image = document.createElement('img');
@@ -8,14 +9,45 @@ image.onload = () => {
     ctx.drawImage(image,500,150,image.naturalWidth*1.2,image.naturalHeight*1.2);
 }
 
+let spotItGame;
+let cards;
+let points = 0;
+
 
 const startButton = document.querySelector('#start-button')
-startButton.addEventListener('click', function () {
-    let spotItGame = new SpotItGame(cardSets); 
-    let cards = spotItGame.pickCards();
-    console.log(cards)
+startButton.addEventListener('click', function () { 
+    spotItGame = new SpotItGame(cardSets);
+    cards = spotItGame.pickCards();
     spotItGame.drawCards(cards);
 })
+
+let  canvasPosition = myCanvas.getBoundingClientRect();
+let  xClicked, yClicked;
+myCanvas.addEventListener('click', function(event) {
+    xClicked = event.clientX - canvasPosition.left,
+    yClicked = event.clientY - canvasPosition.top;
+    console.log('onclick x=' + xClicked + ',y=' + yClicked);
+    let playingCard = spotItGame.symbolArrPlayingCard;
+    console.log(playingCard)
+    for (let i=0; i<playingCard.length; i++) {
+    if (playingCard[i].isClicked(xClicked,yClicked)) {
+       let getIndex = playingCard[i].index;
+       if (cards[0].includes(getIndex)) {
+        points++;   
+        console.log('points: '+points); //
+       }
+        cards = spotItGame.pickCards();
+        spotItGame.drawCards(cards);
+    }
+    
+}
+
+});
+
+
+
+
+
 
 
 //
