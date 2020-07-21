@@ -1,9 +1,26 @@
-const myCanvas = document.querySelector('canvas');
+const myCanvas = document.querySelector('#card');
 const ctx = myCanvas.getContext('2d');
-drawCard1();
-drawCard2();
+
+// 
+//draw card's back
+//
+ctx.beginPath();
+ctx.arc(300, 300, 230, 0, Math.PI * 2);
+ctx.fillStyle = 'white'; 
+ctx.fill();
+ctx.lineWidth = '5';
+ctx.strokeStyle = 'black'; 
+ctx.stroke();
+ctx.closePath(); 
+
+ctx.beginPath();
+ctx.arc(800, 300, 230, 0, Math.PI * 2);
+ctx.fill(); 
+ctx.stroke();
+ctx.closePath();
+
 const image = document.createElement('img');
-image.src = 'images/Spotit logo.png';
+image.src = 'images/spotItLogo.png';
 image.onload = () => { 
     ctx.drawImage(image,0,150,image.naturalWidth*1.2,image.naturalHeight*1.2);
     ctx.drawImage(image,500,150,image.naturalWidth*1.2,image.naturalHeight*1.2);
@@ -12,14 +29,38 @@ image.onload = () => {
 let spotItGame;
 let cards;
 let points = 0;
+let timer = 90;
+let interval;
 
+// display timer, for now, after timer is base on the level
+document.querySelector('#time span').innerHTML = timer;
+
+//
+//Start button
+//
 
 const startButton = document.querySelector('#start-button')
 startButton.addEventListener('click', function () { 
     spotItGame = new SpotItGame(cardSets);
     cards = spotItGame.pickCards();
     spotItGame.drawCards(cards);
+    interval = setInterval(function () {
+        timer--;
+        document.querySelector('#time span').innerHTML = timer;
+        if (timer<=0) {
+            clearInterval(interval);
+            alert('gameover');
+        }
+    
+    },1000);
+    
+    
 })
+
+
+//
+// Logic game
+//
 
 let  canvasPosition = myCanvas.getBoundingClientRect();
 let  xClicked, yClicked;
@@ -30,50 +71,48 @@ myCanvas.addEventListener('click', function(event) {
     let playingCard = spotItGame.symbolArrPlayingCard;
     console.log(playingCard)
     for (let i=0; i<playingCard.length; i++) {
-    if (playingCard[i].isClicked(xClicked,yClicked)) {
-       let getIndex = playingCard[i].index;
-       if (cards[0].includes(getIndex)) {
-        points++;   
-        console.log('points: '+points); //
-       }
-        cards = spotItGame.pickCards();
-        spotItGame.drawCards(cards);
+        if (playingCard[i].isClicked(xClicked,yClicked)) {
+        let getIndex = playingCard[i].index;
+        console.log(imageSpotIt[getIndex].name)
+        if (cards[0].includes(getIndex)) {
+            points++;   
+            document.querySelector('#points span').innerHTML = points; // display points 
+        } 
+        // draw new card
+        if (spotItGame.isFinished()) {
+            alert('win');
+            clearInterval(interval);
+
+        } else {
+            cards = spotItGame.pickCards();
+            spotItGame.drawCards(cards);
+        }
+            
+            
+        }  
     }
     
-}
 
 });
 
 
 
 
+//
+// Logo
+//
+
+//const contextLogo = document.querySelector('#logo').getContext('2d');
 
 
 
-//
-// CARD 1
-//
-function drawCard1 () {
-    ctx.beginPath();
-    ctx.arc(300, 300, 220, 0, Math.PI * 2);
-    ctx.fillStyle = 'white'; 
-    ctx.fill();
-    ctx.lineWidth = '5';
-    ctx.strokeStyle = 'black'; 
-    ctx.stroke();
-    ctx.closePath(); 
-}
 
-//
-// CARD 2
-//
-function drawCard2 () {
-    ctx.beginPath();
-ctx.arc(800, 300, 220, 0, Math.PI * 2);
-ctx.fill(); 
-ctx.stroke();
-ctx.closePath();
-}
+
+
+
+
+
+
 
 
 // let i=0; 
@@ -81,19 +120,27 @@ ctx.closePath();
 // function display (arr) {
 //     if (i<arr.length) {
 //         const image = document.createElement('img');
-//         image.src = 'images/' + arr[i].img;
+//         image.src = 'images/'+arr[i].img;
 //         image.onload = () => { 
 //         const imgRatio = image.naturalWidth/image.naturalHeight;
-//         const w=130;
+//         const w=100;
 //         const h=w/imgRatio;
-//         ctx.drawImage(image,220,80,h,w);
-//         ctx.drawImage(image,330,140,h,w);
-//         ctx.drawImage(image,370,250,h,w);
-//         ctx.drawImage(image,300,350,h,w);
-//         ctx.drawImage(image,180,370,h,w);
-//         ctx.drawImage(image,90,280,h,w);
-//         ctx.drawImage(image,100,140,h,w);
-//         ctx.drawImage(image,220,230,h,w);
+//         ctx.drawImage(image,240,80,h,w);
+//        // ctx.strokeRect(240,80,h,w)
+//         ctx.drawImage(image,360,140,h,w);
+//         //ctx.strokeRect(360,140,h,w)
+//         ctx.drawImage(image,410,250,h,w);
+//         //ctx.strokeRect(410,250,h,w)
+//         ctx.drawImage(image,350,360,h,w);
+//         //ctx.strokeRect(350,360,h,w)
+//         ctx.drawImage(image,210,400,h,w);
+//         //ctx.strokeRect(210,400,h,w)
+//         ctx.drawImage(image,100,290,h,w);
+//         //ctx.strokeRect(100,290,h,w)
+//         ctx.drawImage(image,120,170,h,w);
+//         //ctx.strokeRect(120,170,h,w)
+//         ctx.drawImage(image,240,240,h,w);
+//         //ctx.strokeRect(240,240,h,w)
 //         i++;
 //         console.log(i)
 //         console.log(arr.length)
@@ -101,11 +148,12 @@ ctx.closePath();
 //     }
 
 // };
+// display(imageSpotIt);
 
 // setInterval(function () {
 //     display(imageSpotIt);
 //     ctx.beginPath();
-//     ctx.arc(300, 300, 220, 0, Math.PI * 2);
+//     ctx.arc(300, 300, 230, 0, Math.PI * 2);
 //     ctx.fillStyle = 'white'; 
 //     ctx.fill();
 //     ctx.strokeStyle = 'black'; 

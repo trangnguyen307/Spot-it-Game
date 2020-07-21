@@ -8,13 +8,16 @@ class Symbol {
 
    
     draw () {
+        
         const image = document.createElement('img');
         image.src = 'images/' + imageSpotIt[this.index].img; 
         image.onload = () => { 
             const imgRatio = image.naturalWidth/image.naturalHeight;
-            w=130;
+            w=110;
             h=w/imgRatio;
             ctx.drawImage(image,this.x,this.y,w,h);
+            ctx.lineWidth = '1'
+            //ctx.strokeRect(this.x, this.y,w,h)
         }
     }
 

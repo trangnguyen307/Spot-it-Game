@@ -2,7 +2,7 @@ body {
    margin: 0px;
    display: flex;
    flex-direction: column;
-   background-image: url('../images/background2.gif');
+   background-image: url('../images/background3.jpg');
    background-repeat: no-repeat;
    background-size: cover;
 }
@@ -10,14 +10,13 @@ body {
    display: flex;
    flex-direction: row;
    align-items: center;
-   justify-content: center;
+   justify-content: space-between;
    /*width: 40%;*/
    /*margin-right: 100px;*/
-   margin: auto;
 }
-img {
-   width: 100%;
-   
+h1 {
+   font-size: 200px;
+   margin: 0;
 }
 button {
    width: 200px;
@@ -34,7 +33,7 @@ button {
 }
 header {
    display: flex;
-   justify-content: space-around;
+   /*justify-content: space-around;*/
 }
 p {
    border: 1px solid;
@@ -43,10 +42,10 @@ p {
    text-align: center;
 }
 #points {
-   margin-left: 80px;
+   margin-left: 320px;
 }
 #time {
-   margin-right: 80px;
+   margin-left: 380px;
 }
 canvas {
    margin-left: 100px;
