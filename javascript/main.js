@@ -2,15 +2,17 @@
 //logo's design
 //
 
-const contextLogo = document.querySelector('#logo').getContext('2d');
+// const contextLogo = document.querySelector('#logo').getContext('2d');
 
-contextLogo.font = 'italic 100px Roboto, sans-serif';
-contextLogo.fillText('Spot',20,100)
 
-contextLogo.font = '100px serif';
-contextLogo.fillStyle = '#ffc324';
-contextLogo.lineWidth = '50'
-contextLogo.fillText('IT',90,180);
+// setTimeout(function () {
+//     contextLogo.font = '120px "Great Vibes"';
+//     contextLogo.fillText('Spot',20,100);
+// }, 5000)
+
+// contextLogo.font = '120px epilogue';
+// contextLogo.fillStyle = '#c8cfd7';
+// contextLogo.fillText('IT',90,190,200);
 
 //
 // GAME
@@ -31,41 +33,50 @@ let points = 0;
 let click = 0;
 let timer;
 let interval=0;
+let timeOutID=0;
 let stopGame;
-
+let canvasPosition;
 //
 //Start button
 //
 
 const startButton = document.querySelector('#start-button')
 startButton.addEventListener('click', function () { 
+    canvasPosition = myCanvas.getBoundingClientRect();
     if (interval !== 0) {
         clearInterval(interval);
+    }
+    if (timeOutID !== 0) {
+        clearTimeout(timeOutID);
     }
     timer = 30;
     points = 0;
     click = 0;
     stopGame = false;
+    ctx.clearRect(0,0,myCanvas.width,myCanvas.height);
+    drawCardBack();
     document.querySelector('#time span').innerHTML = timer; // display timer
-    spotItGame = new SpotItGame(cardSets);
-    cards = spotItGame.pickCards();
-    spotItGame.drawCards(cards);
-    interval = setInterval(function () {
-        timer--;
-        document.querySelector('#time span').innerHTML = timer;
-        if (timer<=0) {
-            stopGame = true;
-            clearInterval(interval);
-            ctx.fillStyle = 'black'
-            ctx.globalAlpha = 1.0;
-            ctx.fillRect(300,170,500,250)
+    setTimeout(function () {
+        spotItGame = new SpotItGame(cardSets);
+        cards = spotItGame.pickCards();
+        spotItGame.drawCards(cards);
+        interval = setInterval(function () {
+            timer--;
+            document.querySelector('#time span').innerHTML = timer;
+            if (timer<=0) {
+                stopGame = true;
+                clearInterval(interval);
+                ctx.fillStyle = '#2e82d8'
+                ctx.globalAlpha = 1.0;
+                ctx.fillRect(300,170,500,250)
 
-            ctx.fillStyle = 'red';
-            ctx.font = '100px Roboto'
-            ctx.fillText('GAME OVER',400,300,300)
-        }
+                ctx.fillStyle = '#c8cfd7';
+                ctx.font = '100px Roboto'
+                ctx.fillText('GAME OVER',400,300,300)
+            }
+        },1000);
+    },4000)
     
-    },1000);
     
     
 })
@@ -75,7 +86,7 @@ startButton.addEventListener('click', function () {
 // Logic game
 //
 
-let  canvasPosition = myCanvas.getBoundingClientRect();
+canvasPosition = myCanvas.getBoundingClientRect();
 let  xClicked, yClicked;
 myCanvas.addEventListener('click', function(event) {
     if (stopGame === false) {
@@ -144,6 +155,11 @@ myCanvas.addEventListener('click', function(event) {
 
 });
 
+
+//
+// function
+//
+
 function drawCardBack () {
     ctx.beginPath();
 ctx.arc(300, 300, 230, 0, Math.PI * 2);
@@ -161,10 +177,10 @@ ctx.stroke();
 ctx.closePath();
 
 const image = document.createElement('img');
-image.src = 'images/spotItLogo.png';
+image.src = 'images/hand.png';
 image.onload = () => { 
-    ctx.drawImage(image,0,150,image.naturalWidth*1.2,image.naturalHeight*1.2);
-    ctx.drawImage(image,500,150,image.naturalWidth*1.2,image.naturalHeight*1.2);
+    ctx.drawImage(image,190,160,image.naturalWidth*2,image.naturalHeight*2);
+    ctx.drawImage(image,690,160,image.naturalWidth*2,image.naturalHeight*2);
 }
 }
 

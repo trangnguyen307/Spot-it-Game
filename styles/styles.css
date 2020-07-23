@@ -11,7 +11,6 @@ body {
    display: flex;
    flex-direction: column;
    align-items: center;
-   justify-content: space-between;
 }
 #button-section {
    display: flex;
@@ -19,12 +18,23 @@ body {
    margin:0;
 }
 #logo {
-   border: 1px solid;
-   margin: 50px 0px 0px 0px;
+   /* border: 1px solid; */
+   /* margin: 50px 0px 0px 0px; */
+   line-height: 120px;
+}
+#logo > p {
+   font-size: 150px;
+   font-family: Great Vibes, cursive;
+   margin-bottom: 0px;
+}
+h1 {
+   font-size: 180px;
+   margin-top: 0px;
+   margin-left: 130px;
 }
 button {
    width: 200px;
-   margin: 8px;
+   margin: 8px; 
    padding: 10px;
    font-size: 20px;
 }
@@ -35,23 +45,27 @@ button {
 }
 header {
    display: flex;
+   margin-bottom: 0px;
    /*justify-content: space-around;*/
 }
-p {
+header > p {
    border: 1px solid;
    padding: 10px;
-   width: 100px;
+   width: 200px;
    text-align: center;
+   background-color: #e4e7ec;
  
 }
 #points {
-   margin-left: 320px;
+   margin-left: 230px;
 }
 #time {
-   margin-left: 380px;
+   margin-left: 290px;
 }
 canvas {
    margin-left: 50px; 
+   margin-top: 0px;
+   border: 1px solid;
 }
 /*#card-section {
    display: flex;
