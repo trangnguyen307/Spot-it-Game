@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
     <title>Spot it!</title>
     <link rel="stylesheet" href="styles/styles.css">
 </head>
@@ -11,7 +11,7 @@
 <body>
     <!--<canvas width="Infinity" height="Infinity"></canvas>-->
     <section id="intro">
-        <h1>Spot<br>IT</h1>
+        <canvas id='logo' width='250' height="400"></canvas>
         <section id='button-section'>
             <button id='start-button'>START</button>
             <button>Level</button>
@@ -21,7 +21,7 @@
 
     <section id="main-section">
         <header>
-            <p id="points">POINT: <span>0</span>/28</p>
+            <p id="points">POINT: <span>0</span>/<span id='click'>0</span></p>
             <p id="time">TIME: <span>0</span>s</p>
         </header>
         <section id="card-section">

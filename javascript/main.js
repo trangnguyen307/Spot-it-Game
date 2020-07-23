@@ -1,3 +1,22 @@
+//
+//logo's design
+//
+
+const contextLogo = document.querySelector('#logo').getContext('2d');
+
+contextLogo.font = 'italic 100px Roboto, sans-serif';
+contextLogo.fillText('Spot',20,100)
+
+contextLogo.font = '100px serif';
+contextLogo.fillStyle = '#ffc324';
+contextLogo.lineWidth = '50'
+contextLogo.fillText('IT',90,180);
+
+//
+// GAME
+//
+
+
 const myCanvas = document.querySelector('#card');
 const ctx = myCanvas.getContext('2d');
 
@@ -9,11 +28,10 @@ drawCardBack();
 let spotItGame;
 let cards;
 let points = 0;
-let timer = 5;
-let interval;
-
-// display timer, for now, after timer is base on the level
-document.querySelector('#time span').innerHTML = timer;
+let click = 0;
+let timer;
+let interval=0;
+let stopGame;
 
 //
 //Start button
@@ -21,6 +39,14 @@ document.querySelector('#time span').innerHTML = timer;
 
 const startButton = document.querySelector('#start-button')
 startButton.addEventListener('click', function () { 
+    if (interval !== 0) {
+        clearInterval(interval);
+    }
+    timer = 30;
+    points = 0;
+    click = 0;
+    stopGame = false;
+    document.querySelector('#time span').innerHTML = timer; // display timer
     spotItGame = new SpotItGame(cardSets);
     cards = spotItGame.pickCards();
     spotItGame.drawCards(cards);
@@ -28,9 +54,15 @@ startButton.addEventListener('click', function () {
         timer--;
         document.querySelector('#time span').innerHTML = timer;
         if (timer<=0) {
+            stopGame = true;
             clearInterval(interval);
-            drawCardBack();
-            alert('gameover');
+            ctx.fillStyle = 'black'
+            ctx.globalAlpha = 1.0;
+            ctx.fillRect(300,170,500,250)
+
+            ctx.fillStyle = 'red';
+            ctx.font = '100px Roboto'
+            ctx.fillText('GAME OVER',400,300,300)
         }
     
     },1000);
@@ -46,31 +78,67 @@ startButton.addEventListener('click', function () {
 let  canvasPosition = myCanvas.getBoundingClientRect();
 let  xClicked, yClicked;
 myCanvas.addEventListener('click', function(event) {
-    xClicked = event.clientX - canvasPosition.left,
-    yClicked = event.clientY - canvasPosition.top;
-    console.log('onclick x=' + xClicked + ',y=' + yClicked);
-    let playingCard = spotItGame.symbolArrPlayingCard;
-    console.log(playingCard)
-    for (let i=0; i<playingCard.length; i++) {
-        if (playingCard[i].isClicked(xClicked,yClicked)) {
-        let getIndex = playingCard[i].index;
-        console.log(imageSpotIt[getIndex].name)
-        if (cards[0].includes(getIndex)) {
-            points++;   
-            document.querySelector('#points span').innerHTML = points; // display points 
-        } 
-        // draw new card
-        if (spotItGame.isFinished()) {
-            alert('win');
-            clearInterval(interval);
+    if (stopGame === false) {
+        xClicked = event.clientX - canvasPosition.left,
+        yClicked = event.clientY - canvasPosition.top;
+        console.log('onclick x=' + xClicked + ',y=' + yClicked);
+        let playingCard = spotItGame.symbolArrPlayingCard;
+        console.log(playingCard)
+        for (let i=0; i<playingCard.length; i++) {
+            if (playingCard[i].isClicked(xClicked,yClicked)) {
+                click++;
+                document.querySelector('#click').innerHTML = click;
 
-        } else {
-            cards = spotItGame.pickCards();
-            spotItGame.drawCards(cards);
+                let getIndex = playingCard[i].index;
+                console.log(imageSpotIt[getIndex].name)
+                if (cards[0].includes(getIndex)) {
+                    points++;   
+                    document.querySelector('#points span').innerHTML = points; // display points 
+                } 
+                // draw new card
+                if (spotItGame.isFinished()) {
+                    clearInterval(interval);
+                    stopGame = true;
+                    ctx.fillStyle = 'black';
+                    ctx.globalAlpha = 1.0;
+                    ctx.fillRect(300,170,500,250)
+
+                    if (points === 0) {
+                        ctx.fillStyle = 'red';
+                        ctx.font = '100px Roboto'
+                        ctx.fillText('GAME OVER',400,300,300)
+                    } else if (points > 0) {
+                        if (points < 8) {
+                            ctx.fillStyle = 'red';
+                            ctx.font = '100px Roboto'
+                            ctx.fillText('Oopssss!!!',420,300,280)
+                        } else if (points >= 8 && points <15 ) {
+                            ctx.fillStyle = 'red';
+                            ctx.font = '100px Roboto'
+                            ctx.fillText('GOOD JOB!!!',420,300,280)
+                        } else if ( points <= 15 && points < 23 ) {
+                            ctx.fillStyle = 'red';
+                            ctx.font = '100px Roboto'
+                            ctx.fillText('WELL DONE!!!',420,300,280)
+                        } else if (points >= 23) {
+                            ctx.fillStyle = 'red';
+                            ctx.font = '100px Roboto'
+                            ctx.fillText('BRAVOOO!!!',420,300,280)
+                        }
+    
+                        ctx.font = '60px Roboto'
+                        ctx.fillText(`You got ${points} points`,350, 370 )
+                    }
+
+                } else {
+                    cards = spotItGame.pickCards();
+                    spotItGame.drawCards(cards);
+                }
+                    
+                    
+            }  
         }
-            
-            
-        }  
+        
     }
     
 
@@ -99,22 +167,6 @@ image.onload = () => {
     ctx.drawImage(image,500,150,image.naturalWidth*1.2,image.naturalHeight*1.2);
 }
 }
-
-
-//
-// Logo
-//
-
-//const contextLogo = document.querySelector('#logo').getContext('2d');
-
-
-
-
-
-
-
-
-
 
 
 
