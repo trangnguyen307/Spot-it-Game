@@ -4,32 +4,12 @@ const ctx = myCanvas.getContext('2d');
 // 
 //draw card's back
 //
-ctx.beginPath();
-ctx.arc(300, 300, 230, 0, Math.PI * 2);
-ctx.fillStyle = 'white'; 
-ctx.fill();
-ctx.lineWidth = '5';
-ctx.strokeStyle = 'black'; 
-ctx.stroke();
-ctx.closePath(); 
-
-ctx.beginPath();
-ctx.arc(800, 300, 230, 0, Math.PI * 2);
-ctx.fill(); 
-ctx.stroke();
-ctx.closePath();
-
-const image = document.createElement('img');
-image.src = 'images/spotItLogo.png';
-image.onload = () => { 
-    ctx.drawImage(image,0,150,image.naturalWidth*1.2,image.naturalHeight*1.2);
-    ctx.drawImage(image,500,150,image.naturalWidth*1.2,image.naturalHeight*1.2);
-}
+drawCardBack();
 
 let spotItGame;
 let cards;
 let points = 0;
-let timer = 90;
+let timer = 5;
 let interval;
 
 // display timer, for now, after timer is base on the level
@@ -49,6 +29,7 @@ startButton.addEventListener('click', function () {
         document.querySelector('#time span').innerHTML = timer;
         if (timer<=0) {
             clearInterval(interval);
+            drawCardBack();
             alert('gameover');
         }
     
@@ -95,7 +76,29 @@ myCanvas.addEventListener('click', function(event) {
 
 });
 
+function drawCardBack () {
+    ctx.beginPath();
+ctx.arc(300, 300, 230, 0, Math.PI * 2);
+ctx.fillStyle = 'white'; 
+ctx.fill();
+ctx.lineWidth = '5';
+ctx.strokeStyle = 'black'; 
+ctx.stroke();
+ctx.closePath(); 
 
+ctx.beginPath();
+ctx.arc(800, 300, 230, 0, Math.PI * 2);
+ctx.fill(); 
+ctx.stroke();
+ctx.closePath();
+
+const image = document.createElement('img');
+image.src = 'images/spotItLogo.png';
+image.onload = () => { 
+    ctx.drawImage(image,0,150,image.naturalWidth*1.2,image.naturalHeight*1.2);
+    ctx.drawImage(image,500,150,image.naturalWidth*1.2,image.naturalHeight*1.2);
+}
+}
 
 
 //
