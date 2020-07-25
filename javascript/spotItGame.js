@@ -55,7 +55,7 @@ class SpotItGame {
         ctx.arc(220, 230, 210, 0, Math.PI * 2);
         ctx.fillStyle = 'white'; 
         ctx.fill();
-        ctx.lineWidth = '5';
+        ctx.lineWidth = '2';
         ctx.strokeStyle = 'black'; 
         ctx.stroke();
         ctx.closePath(); 

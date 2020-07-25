@@ -1,20 +1,4 @@
 //
-//logo's design
-//
-
-// const contextLogo = document.querySelector('#logo').getContext('2d');
-
-
-// setTimeout(function () {
-//     contextLogo.font = '120px "Great Vibes"';
-//     contextLogo.fillText('Spot',20,100);
-// }, 5000)
-
-// contextLogo.font = '120px epilogue';
-// contextLogo.fillStyle = '#c8cfd7';
-// contextLogo.fillText('IT',90,190,200);
-
-//
 // GAME
 //
 
@@ -36,7 +20,7 @@ let interval=0;
 let timeOutID=0;
 let stopGame;
 let canvasPosition;
-
+let option; // select level
 
 
 //
@@ -52,16 +36,29 @@ startButton.addEventListener('click', function () {
     if (timeOutID !== 0) {
         clearTimeout(timeOutID);
     }
-    timer = 120;
+
+    //select level
+    option = getSelectedOption(sel);
+    if (option.value === 'easy') {
+        timer = 180;
+    } else if (option.value === 'medium') {
+        timer = 120;
+    } else if (option.value === 'hard') {
+        timer = 80;
+    }
+
+    // display timer
+    document.querySelector('#time span').innerHTML = timer; 
+
+    //set up variables
     points = 0;
+    document.querySelector('#points span').innerHTML = points;
     click = 0;
+    document.querySelector('#click').innerHTML = click;
     stopGame = false;
     ctx.clearRect(0,0,myCanvas.width,myCanvas.height);
-    document.querySelector('#time span').innerHTML = timer; // display timer
-    document.querySelector('#click').innerHTML = click;
-    document.querySelector('#points span').innerHTML = points;
     
-   
+    // start game
     spotItGame = new SpotItGame(cardSets);
     cards = spotItGame.pickCards();
     spotItGame.drawCards(cards);
@@ -82,10 +79,7 @@ startButton.addEventListener('click', function () {
             ctx.fillText('GAME OVER',300,230,300)
             
         }
-    },1000);
-
-    
-    
+    },1000);    
 })
 
 
@@ -176,7 +170,7 @@ function drawCardBack () {
 ctx.arc(220, 230, 210, 0, Math.PI * 2);
 ctx.fillStyle = 'white'; 
 ctx.fill();
-ctx.lineWidth = '5';
+ctx.lineWidth = '2';
 ctx.strokeStyle = 'black'; 
 ctx.stroke();
 ctx.closePath(); 
@@ -209,106 +203,33 @@ function playSound (status) {
     audio.play();
 }
 
+let sel = document.querySelector('select'); // get value of selected option
+function getSelectedOption(sel) {
+    var opt;
+    for ( var i = 0, len = sel.options.length; i < len; i++ ) {
+        opt = sel.options[i];
+        if ( opt.selected === true ) {
+            break;
+        }
+    }
+    return opt;
+}
+
+//
+// How to play?
+//
+
+const button = document.querySelector('.how-to-play');
+button.addEventListener('click', function () {
+    button.toggle.classList('display');
+    if (button.className.includes('display')) {
+        ctx.fillStyle = 'black';
+        ctx.fillRect(0,0,900,450)
+    } else {
+        clearRect(0,0,900,450),
+        drawCardBack;
+    }
+})
 
 
 
-// let i=0; 
-
-// function display (arr) {
-//     if (i<arr.length) {
-//         const image = document.createElement('img');
-//         image.src = 'images/'+arr[i].img;
-//         image.onload = () => { 
-//         const imgRatio = image.naturalWidth/image.naturalHeight;
-//         const w=100;
-//         const h=w/imgRatio;
-//         ctx.drawImage(image,240,80,h,w);
-//        // ctx.strokeRect(240,80,h,w)
-//         ctx.drawImage(image,360,140,h,w);
-//         //ctx.strokeRect(360,140,h,w)
-//         ctx.drawImage(image,410,250,h,w);
-//         //ctx.strokeRect(410,250,h,w)
-//         ctx.drawImage(image,350,360,h,w);
-//         //ctx.strokeRect(350,360,h,w)
-//         ctx.drawImage(image,210,400,h,w);
-//         //ctx.strokeRect(210,400,h,w)
-//         ctx.drawImage(image,100,290,h,w);
-//         //ctx.strokeRect(100,290,h,w)
-//         ctx.drawImage(image,120,170,h,w);
-//         //ctx.strokeRect(120,170,h,w)
-//         ctx.drawImage(image,240,240,h,w);
-//         //ctx.strokeRect(240,240,h,w)
-//         i++;
-//         console.log(i)
-//         console.log(arr.length)
-//         }
-//     }
-
-// };
-// display(imageSpotIt);
-
-// setInterval(function () {
-//     display(imageSpotIt);
-//     ctx.beginPath();
-//     ctx.arc(300, 300, 230, 0, Math.PI * 2);
-//     ctx.fillStyle = 'white'; 
-//     ctx.fill();
-//     ctx.strokeStyle = 'black'; 
-//     ctx.stroke();
-//     ctx.closePath();
-// }, 1000)
-
-
-
-// const image = document.createElement('img');
-// image.src = 'images/carrot.png';
-// image.onload = () => { 
-//     const imgRatio = image.naturalWidth/image.naturalHeight;
-//     const w=130;
-//     const h=w/imgRatio;
-//     ctx.drawImage(image,220,80,h,w);
-//     ctx.drawImage(image,330,140,h,w);
-//     ctx.drawImage(image,370,250,h,w);
-//     ctx.drawImage(image,300,350,h,w);
-//     ctx.drawImage(image,180,370,h,w);
-//     ctx.drawImage(image,90,280,h,w);
-//     ctx.drawImage(image,100,140,h,w);
-//     ctx.drawImage(image,220,230,h,w);
-    
-// }
-
-
-
-// const image1 = document.createElement('img');
-// image1.src = 'images/baloon.png';
-// image1.onload = () => { 
-//     const imgRatio = image1.naturalWidth/image1.naturalHeight;
-//     const w=140;
-//     const h=w/imgRatio;
-//     ctx.drawImage(image1,220,80,h,w);
-//     ctx.drawImage(image1,330,140,h,w);
-//     ctx.drawImage(image1,370,250,h,w);
-//     ctx.drawImage(image1,300,350,h,w);
-//     ctx.drawImage(image1,180,370,h,w);
-//     ctx.drawImage(image1,90,280,h,w);
-//     ctx.drawImage(image1,100,140,h,w);
-//     ctx.drawImage(image1,220,230,h,w);
-    
-// }
-    // ctx.fillStyle = 'black'
-    // ctx.fillRect(ctx.canvas.width/2,ctx.canvas.height/2,300,200);
-    
-    // ctx.font = '100px serif'
-    // ctx.fillStyle = '#870007'
-    // ctx.textAlign = 'center';
-    // ctx.fillText('Game Over!',,);
-
-    // ctx.font = '100px serif'
-    // ctx.fillStyle = 'white'
-    // ctx.textAlign = 'center';
-    // ctx.fillText('Your final score',W/2,H/2+150);
-
-    // ctx.font = '100px serif'
-    // ctx.fillStyle = 'white'
-    // ctx.textAlign = 'center';
-    // ctx.fillText(`${points}`,W/2,H/2+300);
