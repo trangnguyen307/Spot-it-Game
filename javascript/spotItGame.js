@@ -27,7 +27,7 @@ class SpotItGame {
 
         if (cardsPicked === null) {
             ctx.beginPath();
-            ctx.arc(300, 300, 230, 0, Math.PI * 2);
+            ctx.arc(220, 230, 210, 0, Math.PI * 2);
             ctx.fillStyle = 'white'; 
             ctx.fill();
             ctx.lineWidth = '5';
@@ -36,7 +36,7 @@ class SpotItGame {
             ctx.closePath(); 
 
             ctx.beginPath();
-            ctx.arc(800, 300, 230, 0, Math.PI * 2);
+            ctx.arc(680, 230, 210, 0, Math.PI * 2);
             ctx.fill(); 
             ctx.stroke();
             ctx.closePath();
@@ -52,7 +52,7 @@ class SpotItGame {
         }
         // draw card1
         ctx.beginPath();
-        ctx.arc(300, 300, 230, 0, Math.PI * 2);
+        ctx.arc(220, 230, 210, 0, Math.PI * 2);
         ctx.fillStyle = 'white'; 
         ctx.fill();
         ctx.lineWidth = '5';
@@ -67,7 +67,7 @@ class SpotItGame {
 
         //draw card2
         ctx.beginPath();
-        ctx.arc(800, 300, 230, 0, Math.PI * 2);
+        ctx.arc(680, 230, 210, 0, Math.PI * 2);
         ctx.fill(); 
         ctx.stroke();
         ctx.closePath();
@@ -75,7 +75,7 @@ class SpotItGame {
         this.symbolArrPlayingCard = []; // to re-call the symbols in main.js
         for (let i=0; i< cardsPicked[0].length; i++) {
             console.log('i:'+i+ ', index'+cardsPicked[1][i])
-            let symbol = new Symbol(imagePosition1[i].x+500, imagePosition1[i].y, cardsPicked[1][i]);
+            let symbol = new Symbol(imagePosition1[i].x+460, imagePosition1[i].y, cardsPicked[1][i]);
             this.symbolArrPlayingCard.push(symbol);
             symbol.draw();
         }

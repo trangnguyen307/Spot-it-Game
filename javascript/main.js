@@ -52,13 +52,16 @@ startButton.addEventListener('click', function () {
     if (timeOutID !== 0) {
         clearTimeout(timeOutID);
     }
-    timer = 3;
+    timer = 120;
     points = 0;
     click = 0;
     stopGame = false;
     ctx.clearRect(0,0,myCanvas.width,myCanvas.height);
-    //drawCardBack();
     document.querySelector('#time span').innerHTML = timer; // display timer
+    document.querySelector('#click').innerHTML = click;
+    document.querySelector('#points span').innerHTML = points;
+    
+   
     spotItGame = new SpotItGame(cardSets);
     cards = spotItGame.pickCards();
     spotItGame.drawCards(cards);
@@ -70,13 +73,13 @@ startButton.addEventListener('click', function () {
             stopGame = true;
             playSound('over');
             clearInterval(interval);
-            ctx.fillStyle = '#2e82d8'
+            ctx.fillStyle = 'black';
             ctx.globalAlpha = 1.0;
-            ctx.fillRect(300,170,500,250)
+            ctx.fillRect(230,120,430,220)
 
-            ctx.fillStyle = '#c8cfd7';
-            ctx.font = '100px Roboto'
-            ctx.fillText('GAME OVER',400,300,300)
+            ctx.fillStyle = 'red';
+            ctx.font = '80px Roboto'
+            ctx.fillText('GAME OVER',300,230,300)
             
         }
     },1000);
@@ -120,33 +123,33 @@ myCanvas.addEventListener('click', function(event) {
                     playSound('win');
                     ctx.fillStyle = 'black';
                     ctx.globalAlpha = 1.0;
-                    ctx.fillRect(300,170,500,250)
+                    ctx.fillRect(230,120,430,220)
 
                     if (points === 0) {
                         ctx.fillStyle = 'red';
-                        ctx.font = '100px Roboto'
-                        ctx.fillText('GAME OVER',400,300,300)
+                        ctx.font = '80px Roboto'
+                        ctx.fillText('GAME OVER',310,200,300)
                     } else if (points > 0) {
                         if (points < 8) {
                             ctx.fillStyle = 'red';
-                            ctx.font = '100px Roboto'
-                            ctx.fillText('Oopssss!!!',420,300,280)
+                            ctx.font = '80px Roboto'
+                            ctx.fillText('Oopssss!!!',310,210,280)
                         } else if (points >= 8 && points <15 ) {
                             ctx.fillStyle = 'red';
-                            ctx.font = '100px Roboto'
-                            ctx.fillText('GOOD JOB!!!',420,300,280)
+                            ctx.font = '80px Roboto'
+                            ctx.fillText('GOOD JOB!!!',310,200,280)
                         } else if ( points <= 15 && points < 23 ) {
                             ctx.fillStyle = 'red';
-                            ctx.font = '100px Roboto'
-                            ctx.fillText('WELL DONE!!!',420,300,280)
+                            ctx.font = '80px Roboto'
+                            ctx.fillText('WELL DONE!!!',310,200,280)
                         } else if (points >= 23) {
                             ctx.fillStyle = 'red';
-                            ctx.font = '100px Roboto'
-                            ctx.fillText('BRAVOOO!!!',420,300,280)
+                            ctx.font = '80px Roboto'
+                            ctx.fillText('BRAVOOO!!!',310,200,280)
                         }
     
-                        ctx.font = '60px Roboto'
-                        ctx.fillText(`You got ${points} points`,350, 370 )
+                        ctx.font = '50px Roboto'
+                        ctx.fillText(`You got ${points} points`,280, 275)
                     }
 
                 } else {
@@ -170,7 +173,7 @@ myCanvas.addEventListener('click', function(event) {
 
 function drawCardBack () {
     ctx.beginPath();
-ctx.arc(300, 300, 230, 0, Math.PI * 2);
+ctx.arc(220, 230, 210, 0, Math.PI * 2);
 ctx.fillStyle = 'white'; 
 ctx.fill();
 ctx.lineWidth = '5';
@@ -179,7 +182,7 @@ ctx.stroke();
 ctx.closePath(); 
 
 ctx.beginPath();
-ctx.arc(800, 300, 230, 0, Math.PI * 2);
+ctx.arc(680, 230, 210, 0, Math.PI * 2);
 ctx.fill(); 
 ctx.stroke();
 ctx.closePath();
@@ -187,8 +190,8 @@ ctx.closePath();
 const image = document.createElement('img');
 image.src = 'images/hand.png';
 image.onload = () => { 
-    ctx.drawImage(image,190,160,image.naturalWidth*2,image.naturalHeight*2);
-    ctx.drawImage(image,690,160,image.naturalWidth*2,image.naturalHeight*2);
+    ctx.drawImage(image,110,100,image.naturalWidth*2,image.naturalHeight*2);
+    ctx.drawImage(image,570,100,image.naturalWidth*2,image.naturalHeight*2);
 }
 }
 

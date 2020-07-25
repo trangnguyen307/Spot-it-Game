@@ -20,17 +20,16 @@ body {
 #logo {
    /* border: 1px solid; */
    /* margin: 50px 0px 0px 0px; */
-   line-height: 120px;
+   line-height: 120px; 
 }
 #logo > p {
    font-size: 150px;
    font-family: Great Vibes, cursive;
-   margin-bottom: 0px;
+   margin: 70px 0px 0px 0px;
 }
 h1 {
    font-size: 180px;
-   margin-top: 0px;
-   margin-left: 130px;
+   margin: 0px 0px 70px 130px;
 }
 button {
    width: 200px;
@@ -41,7 +40,7 @@ button {
 #main-section {
    display: flex;
    flex-direction: column;
-   margin-top: 100px;
+   margin-top: 30px;
 }
 header {
    display: flex;
@@ -57,15 +56,15 @@ header > p {
  
 }
 #points {
-   margin-left: 230px;
+   margin-left: 150px;
 }
 #time {
-   margin-left: 290px;
+   margin-left: 240px;
 }
 canvas {
-   margin-left: 50px; 
+   margin-left: 30px; 
    margin-top: 0px;
-   /* border: 1px solid; */
+   border: 1px solid;
 }
 /*#card-section {
    display: flex;
