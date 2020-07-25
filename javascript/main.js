@@ -36,6 +36,9 @@ let interval=0;
 let timeOutID=0;
 let stopGame;
 let canvasPosition;
+
+
+
 //
 //Start button
 //
@@ -49,34 +52,35 @@ startButton.addEventListener('click', function () {
     if (timeOutID !== 0) {
         clearTimeout(timeOutID);
     }
-    timer = 30;
+    timer = 3;
     points = 0;
     click = 0;
     stopGame = false;
     ctx.clearRect(0,0,myCanvas.width,myCanvas.height);
-    drawCardBack();
+    //drawCardBack();
     document.querySelector('#time span').innerHTML = timer; // display timer
-    setTimeout(function () {
-        spotItGame = new SpotItGame(cardSets);
-        cards = spotItGame.pickCards();
-        spotItGame.drawCards(cards);
-        interval = setInterval(function () {
-            timer--;
-            document.querySelector('#time span').innerHTML = timer;
-            if (timer<=0) {
-                stopGame = true;
-                clearInterval(interval);
-                ctx.fillStyle = '#2e82d8'
-                ctx.globalAlpha = 1.0;
-                ctx.fillRect(300,170,500,250)
+    spotItGame = new SpotItGame(cardSets);
+    cards = spotItGame.pickCards();
+    spotItGame.drawCards(cards);
+    interval = setInterval(function () {
+        timer--;
+        document.querySelector('#time span').innerHTML = timer;
+        // if time is up, game is over.
+        if (timer<=0) {
+            stopGame = true;
+            playSound('over');
+            clearInterval(interval);
+            ctx.fillStyle = '#2e82d8'
+            ctx.globalAlpha = 1.0;
+            ctx.fillRect(300,170,500,250)
 
-                ctx.fillStyle = '#c8cfd7';
-                ctx.font = '100px Roboto'
-                ctx.fillText('GAME OVER',400,300,300)
-            }
-        },1000);
-    },4000)
-    
+            ctx.fillStyle = '#c8cfd7';
+            ctx.font = '100px Roboto'
+            ctx.fillText('GAME OVER',400,300,300)
+            
+        }
+    },1000);
+
     
     
 })
@@ -103,13 +107,17 @@ myCanvas.addEventListener('click', function(event) {
                 let getIndex = playingCard[i].index;
                 console.log(imageSpotIt[getIndex].name)
                 if (cards[0].includes(getIndex)) {
+                    playSound('correct');
                     points++;   
                     document.querySelector('#points span').innerHTML = points; // display points 
-                } 
+                } else {
+                    playSound('wrong');
+                }
                 // draw new card
                 if (spotItGame.isFinished()) {
                     clearInterval(interval);
                     stopGame = true;
+                    playSound('win');
                     ctx.fillStyle = 'black';
                     ctx.globalAlpha = 1.0;
                     ctx.fillRect(300,170,500,250)
@@ -183,6 +191,21 @@ image.onload = () => {
     ctx.drawImage(image,690,160,image.naturalWidth*2,image.naturalHeight*2);
 }
 }
+
+function playSound (status) {
+    let audio = new Audio();
+    if (status === 'correct') {
+        audio.src = 'sound/sound-correct.mp3'
+    } else if (status === 'wrong') {
+        audio.src = 'sound/sound-wrong.mp3'
+    } else if (status === 'win') {
+        audio.src = 'sound/sound-win.mp3'
+    } else if (status === 'over') {
+        audio.src = 'sound/game-over.wav'
+    }
+    audio.play();
+}
+
 
 
 
