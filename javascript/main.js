@@ -11,15 +11,19 @@ const ctx = myCanvas.getContext('2d');
 //
 drawCardBack();
 
-let spotItGame;
-let cards;
+
+//
+// set up variables
+//
+let spotItGame; // intends of class spotItGame
+let cards; 
 let points = 0;
 let click = 0;
 let timer;
 let interval=0;
 let timeOutID=0;
-let stopGame;
-let canvasPosition;
+let stopGame; // once stopGame is true, the game must be stop completely, we can't click on canvas
+let canvasPosition; // set position of canvas each time we change the screen size, we call it when we click on start button
 let option; // select level
 
 
@@ -50,7 +54,7 @@ startButton.addEventListener('click', function () {
     // display timer
     document.querySelector('#time span').innerHTML = timer; 
 
-    //set up variables
+    //reset the variables
     points = 0;
     document.querySelector('#points span').innerHTML = points;
     click = 0;
@@ -59,7 +63,7 @@ startButton.addEventListener('click', function () {
     ctx.clearRect(0,0,myCanvas.width,myCanvas.height);
     
     // start game
-    spotItGame = new SpotItGame(cardSets);
+    spotItGame = new SpotItGame(cardSets); 
     cards = spotItGame.pickCards();
     spotItGame.drawCards(cards);
     interval = setInterval(function () {
@@ -110,7 +114,7 @@ myCanvas.addEventListener('click', function(event) {
                 } else {
                     playSound('wrong');
                 }
-                // draw new card
+                // verify if the game is finished (out of card), display result
                 if (spotItGame.isFinished()) {
                     clearInterval(interval);
                     stopGame = true;
@@ -132,7 +136,7 @@ myCanvas.addEventListener('click', function(event) {
                             ctx.fillStyle = 'red';
                             ctx.font = '80px Roboto'
                             ctx.fillText('GOOD JOB!!!',310,200,280)
-                        } else if ( points <= 15 && points < 23 ) {
+                        } else if ( points >= 15 && points < 23 ) {
                             ctx.fillStyle = 'red';
                             ctx.font = '80px Roboto'
                             ctx.fillText('WELL DONE!!!',310,200,280)
@@ -146,7 +150,7 @@ myCanvas.addEventListener('click', function(event) {
                         ctx.fillText(`You got ${points} points`,280, 275)
                     }
 
-                } else {
+                } else { // if the game isn't finish, continue pick up cards and draw them on canvas
                     cards = spotItGame.pickCards();
                     spotItGame.drawCards(cards);
                 }
@@ -165,6 +169,8 @@ myCanvas.addEventListener('click', function(event) {
 // function
 //
 
+
+// draw card's back when loading game
 function drawCardBack () {
     ctx.beginPath();
 ctx.arc(220, 230, 210, 0, Math.PI * 2);
@@ -189,6 +195,8 @@ image.onload = () => {
 }
 }
 
+
+//play sound
 function playSound (status) {
     let audio = new Audio();
     if (status === 'correct') {
@@ -203,7 +211,8 @@ function playSound (status) {
     audio.play();
 }
 
-let sel = document.querySelector('select'); // get value of selected option
+// get value of selected option
+let sel = document.querySelector('select'); 
 function getSelectedOption(sel) {
     var opt;
     for ( var i = 0, len = sel.options.length; i < len; i++ ) {
