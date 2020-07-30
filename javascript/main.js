@@ -48,7 +48,7 @@ startButton.addEventListener('click', function () {
     } else if (option.value === 'medium') {
         timer = 120;
     } else if (option.value === 'hard') {
-        timer = 80;
+        timer = 5;
     }
 
     // display timer
@@ -76,11 +76,13 @@ startButton.addEventListener('click', function () {
             clearInterval(interval);
             ctx.fillStyle = 'black';
             ctx.globalAlpha = 1.0;
-            ctx.fillRect(230,120,430,220)
+            ctx.fillRect(230,150,430,240)
 
             ctx.fillStyle = 'red';
             ctx.font = '80px Roboto'
-            ctx.fillText('GAME OVER',300,230,300)
+            ctx.fillText('GAME OVER',300,260,300)
+
+            buttonTryAgain();
             
         }
     },1000);    
@@ -121,7 +123,7 @@ myCanvas.addEventListener('click', function(event) {
                     playSound('win');
                     ctx.fillStyle = 'black';
                     ctx.globalAlpha = 1.0;
-                    ctx.fillRect(230,120,430,220)
+                    ctx.fillRect(230,120,430,260)
 
                     if (points === 0) {
                         ctx.fillStyle = 'red';
@@ -148,6 +150,9 @@ myCanvas.addEventListener('click', function(event) {
     
                         ctx.font = '50px Roboto'
                         ctx.fillText(`You got ${points} points`,280, 275)
+                        buttonTryAgain();
+
+
                     }
 
                 } else { // if the game isn't finish, continue pick up cards and draw them on canvas
@@ -171,28 +176,31 @@ myCanvas.addEventListener('click', function(event) {
 
 
 // draw card's back when loading game
-function drawCardBack () {
+function drawCircle () {
     ctx.beginPath();
-ctx.arc(220, 230, 210, 0, Math.PI * 2);
-ctx.fillStyle = 'white'; 
-ctx.fill();
-ctx.lineWidth = '2';
-ctx.strokeStyle = 'black'; 
-ctx.stroke();
-ctx.closePath(); 
+    ctx.arc(220, 230, 210, 0, Math.PI * 2);
+    ctx.fillStyle = 'white'; 
+    ctx.fill();
+    ctx.lineWidth = '2';
+    ctx.strokeStyle = 'black'; 
+    ctx.stroke();
+    ctx.closePath(); 
 
-ctx.beginPath();
-ctx.arc(680, 230, 210, 0, Math.PI * 2);
-ctx.fill(); 
-ctx.stroke();
-ctx.closePath();
-
-const image = document.createElement('img');
-image.src = 'images/hand.png';
-image.onload = () => { 
-    ctx.drawImage(image,110,100,image.naturalWidth*2,image.naturalHeight*2);
-    ctx.drawImage(image,570,100,image.naturalWidth*2,image.naturalHeight*2);
+    ctx.beginPath();
+    ctx.arc(680, 230, 210, 0, Math.PI * 2);
+    ctx.fill(); 
+    ctx.stroke();
+    ctx.closePath();
 }
+function drawCardBack () {
+    drawCircle();
+
+    const image = document.createElement('img');
+    image.src = 'images/hand.png';
+    image.onload = () => { 
+        ctx.drawImage(image,110,100,image.naturalWidth*2,image.naturalHeight*2);
+        ctx.drawImage(image,570,100,image.naturalWidth*2,image.naturalHeight*2);
+    }
 }
 
 
@@ -225,18 +233,48 @@ function getSelectedOption(sel) {
 }
 
 //
+//function create button try again
+
+function buttonTryAgain () {
+    ctx.beginPath();
+    ctx.fillStyle = '#efefef'; 
+    ctx.fillRect(330, 300, 200, 50);
+    ctx.fill(); 
+    ctx.lineWidth = 0.8;
+    ctx.strokeStyle = '#919298'; 
+    ctx.stroke();
+    ctx.closePath();
+    ctx.font = '30px Roboto';
+    ctx.fillStyle = '#000000';
+    ctx.fillText('Try again?', 360, 330);
+}
+
+
+
+//
+//
 // How to play?
 //
 
 const button = document.querySelector('.how-to-play');
 button.addEventListener('click', function () {
-    button.toggle.classList('display');
+    button.classList.toggle('display');
     if (button.className.includes('display')) {
+        clearInterval(interval);
+        stopGame = true;
+        drawCircle();
         ctx.fillStyle = 'black';
-        ctx.fillRect(0,0,900,450)
+        
+        setTimeout(function () {
+            ctx.font = '40px Cookie'
+            ctx.fillText('Your goal is find',75, 100)
+            ctx.fillText('out quickly the matching',50, 150)
+            ctx.fillText('symbol between 2 cards.',30, 200)
+        },500)
+        
     } else {
-        clearRect(0,0,900,450),
-        drawCardBack;
+        ctx.clearRect(0,0,900,450);
+        drawCardBack();
     }
 })
 
