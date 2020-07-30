@@ -178,6 +178,48 @@ myCanvas.addEventListener('click', function(event) {
 });
 
 
+
+//
+//
+// How to play?
+//
+
+const button = document.querySelector('.how-to-play');
+button.addEventListener('click', function () {
+    button.classList.toggle('display');
+    if (button.className.includes('display')) {
+        clearInterval(interval);
+        stopGame = true;
+
+        ctx.clearRect(0,0,900,450);
+        drawCircle();
+        ctx.fillStyle = 'black';
+        loadFontAndWrite('38px Cookie','Your goal is find out',95,80);
+        loadFontAndWrite('38px Cookie','quickly the matching symbol',50,125);
+        loadFontAndWrite('38px Cookie','between 2 cards. The player’s',40, 170);
+        loadFontAndWrite('38px Cookie','card is on the right of screen. Click',20,215);
+        loadFontAndWrite('38px Cookie','on it your symbol that you choose.',25,260);
+        loadFontAndWrite('38px Cookie','If it is the right symbol, you get ',40,305);
+        loadFontAndWrite('38px Cookie',"one point, if not you haven't",60,350);
+        loadFontAndWrite('38px Cookie','a point.',170,395);
+        loadFontAndWrite('38px Cookie','You must also complete',555,80);
+        loadFontAndWrite('38px Cookie','your 28 cards within a limited',510,125);
+        loadFontAndWrite('38px Cookie','time (depending on the level you',500,170);
+        loadFontAndWrite('38px Cookie','choose) otherwise the game will be',480,215);
+        loadFontAndWrite('38px Cookie','over. If you can finish it in time',485,260);
+        loadFontAndWrite('38px Cookie','(but must have a point) then you',500,305);
+        loadFontAndWrite('38px Cookie','are the winner!!!',570,350);
+        loadFontAndWrite('38px Cookie',"Let's play!",610,395);
+        
+    } else {
+        ctx.clearRect(0,0,900,450);
+        drawCardBack();
+    }
+})
+
+
+
+
 //
 // function
 //
@@ -240,9 +282,7 @@ function getSelectedOption(sel) {
     return opt;
 }
 
-//
 //function create button try again
-//
 
 function buttonTryAgain () {
     ctx.beginPath();
@@ -258,36 +298,17 @@ function buttonTryAgain () {
     ctx.fillText('Try again?', 390, 330);
 }
 
+//function load font and write text on canvas
+function loadFontAndWrite(font,text,x,y) {
+    document.fonts.load(font).then(function () {
+      ctx.font = font
+      ctx.fillText(text, x, y)
+    });
+  }
 
 
-//
-//
-// How to play?
-//
 
-const button = document.querySelector('.how-to-play');
-button.addEventListener('click', function () {
-    button.classList.toggle('display');
-    if (button.className.includes('display')) {
-        clearInterval(interval);
-        stopGame = true;
 
-        ctx.clearRect(0,0,900,450);
-        drawCircle();
-        ctx.fillStyle = 'black';
-        
-        setTimeout(function () {
-            ctx.font = '40px Cookie'
-            ctx.fillText('Your goal is find',75, 100)
-            ctx.fillText('out quickly the matching',50, 150)
-            ctx.fillText('symbol between 2 cards.',30, 200)
-        },5000)
-        
-    } else {
-        ctx.clearRect(0,0,900,450);
-        drawCardBack();
-    }
-})
 
 
 
