@@ -83,7 +83,6 @@ startButton.addEventListener('click', function () {
             ctx.fillText('GAME OVER',300,260,300)
 
             buttonTryAgain();
-            
         }
     },1000);    
 })
@@ -96,12 +95,10 @@ startButton.addEventListener('click', function () {
 canvasPosition = myCanvas.getBoundingClientRect();
 let  xClicked, yClicked;
 myCanvas.addEventListener('click', function(event) {
+    xClicked = event.clientX - canvasPosition.left;
+    yClicked = event.clientY - canvasPosition.top;
     if (stopGame === false) {
-        xClicked = event.clientX - canvasPosition.left,
-        yClicked = event.clientY - canvasPosition.top;
-        console.log('onclick x=' + xClicked + ',y=' + yClicked);
         let playingCard = spotItGame.symbolArrPlayingCard;
-        console.log(playingCard)
         for (let i=0; i<playingCard.length; i++) {
             if (playingCard[i].isClicked(xClicked,yClicked)) {
                 click++;
@@ -151,8 +148,7 @@ myCanvas.addEventListener('click', function(event) {
                         ctx.font = '50px Roboto'
                         ctx.fillText(`You got ${points} points`,280, 275)
                         buttonTryAgain();
-
-
+                        
                     }
 
                 } else { // if the game isn't finish, continue pick up cards and draw them on canvas
@@ -164,6 +160,18 @@ myCanvas.addEventListener('click', function(event) {
             }  
         }
         
+    } else {
+        if (xClicked >= 330 && xClicked <= 530 && yClicked >= 300 && yClicked <= 350 ) {
+            ctx.clearRect(0,0,900,450);
+            drawCardBack();
+            points = 0;
+            document.querySelector('#points span').innerHTML = points;
+            click = 0;
+            document.querySelector('#click').innerHTML = click;
+            timer = 0;
+            document.querySelector('#time span').innerHTML = timer; 
+
+        }
     }
     
 
@@ -234,11 +242,12 @@ function getSelectedOption(sel) {
 
 //
 //function create button try again
+//
 
 function buttonTryAgain () {
     ctx.beginPath();
     ctx.fillStyle = '#efefef'; 
-    ctx.fillRect(330, 300, 200, 50);
+    ctx.fillRect(350, 300, 200, 50);
     ctx.fill(); 
     ctx.lineWidth = 0.8;
     ctx.strokeStyle = '#919298'; 
@@ -246,7 +255,7 @@ function buttonTryAgain () {
     ctx.closePath();
     ctx.font = '30px Roboto';
     ctx.fillStyle = '#000000';
-    ctx.fillText('Try again?', 360, 330);
+    ctx.fillText('Try again?', 390, 330);
 }
 
 
@@ -262,6 +271,8 @@ button.addEventListener('click', function () {
     if (button.className.includes('display')) {
         clearInterval(interval);
         stopGame = true;
+
+        ctx.clearRect(0,0,900,450);
         drawCircle();
         ctx.fillStyle = 'black';
         
@@ -270,7 +281,7 @@ button.addEventListener('click', function () {
             ctx.fillText('Your goal is find',75, 100)
             ctx.fillText('out quickly the matching',50, 150)
             ctx.fillText('symbol between 2 cards.',30, 200)
-        },500)
+        },5000)
         
     } else {
         ctx.clearRect(0,0,900,450);
