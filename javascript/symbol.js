@@ -17,7 +17,7 @@ class Symbol {
             h=w/imgRatio;
             ctx.drawImage(image,this.x,this.y,w,h);
             ctx.lineWidth = '1'
-            // ctx.strokeRect(this.x, this.y,w,h)
+            ctx.strokeRect(this.x, this.y,w,h)
         }
     }
 

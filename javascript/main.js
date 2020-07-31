@@ -44,11 +44,11 @@ startButton.addEventListener('click', function () {
     //select level
     option = getSelectedOption(sel);
     if (option.value === 'easy') {
-        timer = 180;
-    } else if (option.value === 'medium') {
         timer = 120;
+    } else if (option.value === 'medium') {
+        timer = 90;
     } else if (option.value === 'hard') {
-        timer = 5;
+        timer = 60;
     }
 
     // display timer
@@ -105,7 +105,6 @@ myCanvas.addEventListener('click', function(event) {
                 document.querySelector('#click').innerHTML = click;
 
                 let getIndex = playingCard[i].index;
-                console.log(imageSpotIt[getIndex].name)
                 if (cards[0].includes(getIndex)) {
                     playSound('correct');
                     points++;   
@@ -117,29 +116,34 @@ myCanvas.addEventListener('click', function(event) {
                 if (spotItGame.isFinished()) {
                     clearInterval(interval);
                     stopGame = true;
-                    playSound('win');
                     ctx.fillStyle = 'black';
                     ctx.globalAlpha = 1.0;
                     ctx.fillRect(230,120,430,260)
 
                     if (points === 0) {
+                        playSound('over');
                         ctx.fillStyle = 'red';
                         ctx.font = '80px Roboto'
-                        ctx.fillText('GAME OVER',310,200,300)
+                        ctx.fillText('GAME OVER',290,230,300)
+                        buttonTryAgain();
                     } else if (points > 0) {
                         if (points < 8) {
+                            playSound('win');
                             ctx.fillStyle = 'red';
                             ctx.font = '80px Roboto'
                             ctx.fillText('Oopssss!!!',310,210,280)
                         } else if (points >= 8 && points <15 ) {
+                            playSound('win');
                             ctx.fillStyle = 'red';
                             ctx.font = '80px Roboto'
                             ctx.fillText('GOOD JOB!!!',310,200,280)
                         } else if ( points >= 15 && points < 23 ) {
+                            playSound('win');
                             ctx.fillStyle = 'red';
                             ctx.font = '80px Roboto'
                             ctx.fillText('WELL DONE!!!',310,200,280)
                         } else if (points >= 23) {
+                            playSound('win');
                             ctx.fillStyle = 'red';
                             ctx.font = '80px Roboto'
                             ctx.fillText('BRAVOOO!!!',310,200,280)
@@ -150,16 +154,14 @@ myCanvas.addEventListener('click', function(event) {
                         buttonTryAgain();
                         
                     }
-
                 } else { // if the game isn't finish, continue pick up cards and draw them on canvas
                     cards = spotItGame.pickCards();
                     spotItGame.drawCards(cards);
                 }
                     
-                    
+                break; 
             }  
-        }
-        
+        } 
     } else {
         if (xClicked >= 330 && xClicked <= 530 && yClicked >= 300 && yClicked <= 350 ) {
             ctx.clearRect(0,0,900,450);
@@ -173,8 +175,6 @@ myCanvas.addEventListener('click', function(event) {
 
         }
     }
-    
-
 });
 
 
@@ -187,10 +187,9 @@ myCanvas.addEventListener('click', function(event) {
 const button = document.querySelector('.how-to-play');
 button.addEventListener('click', function () {
     button.classList.toggle('display');
+    clearInterval(interval);
+    stopGame = true;
     if (button.className.includes('display')) {
-        clearInterval(interval);
-        stopGame = true;
-
         ctx.clearRect(0,0,900,450);
         drawCircle();
         ctx.fillStyle = 'black';
@@ -215,6 +214,12 @@ button.addEventListener('click', function () {
         ctx.clearRect(0,0,900,450);
         drawCardBack();
     }
+    points = 0;
+    document.querySelector('#points span').innerHTML = points;
+    click = 0;
+    document.querySelector('#click').innerHTML = click;
+    timer = 0;
+    document.querySelector('#time span').innerHTML = timer; 
 })
 
 
@@ -248,8 +253,8 @@ function drawCardBack () {
     const image = document.createElement('img');
     image.src = 'images/hand.png';
     image.onload = () => { 
-        ctx.drawImage(image,110,100,image.naturalWidth*2,image.naturalHeight*2);
-        ctx.drawImage(image,570,100,image.naturalWidth*2,image.naturalHeight*2);
+        ctx.drawImage(image,100,80,image.naturalWidth*0.7,image.naturalHeight*0.7);
+        ctx.drawImage(image,560,80,image.naturalWidth*0.7,image.naturalHeight*0.7);
     }
 }
 
@@ -257,14 +262,21 @@ function drawCardBack () {
 //play sound
 function playSound (status) {
     let audio = new Audio();
-    if (status === 'correct') {
-        audio.src = 'sound/sound-correct.mp3'
-    } else if (status === 'wrong') {
-        audio.src = 'sound/sound-wrong.mp3'
-    } else if (status === 'win') {
-        audio.src = 'sound/sound-win.mp3'
-    } else if (status === 'over') {
-        audio.src = 'sound/game-over.wav'
+    switch (status) {
+        case 'correct':
+            audio.src = 'sound/sound-correct.mp3';
+            break;
+        case 'wrong':
+            audio.src = 'sound/sound-wrong.mp3'
+            break;
+        case 'win':
+            audio.src = 'sound/sound-win.mp3'
+            break;
+        case 'over':
+            audio.src = 'sound/game-over.wav';
+            break;
+        default:
+            break;
     }
     audio.play();
 }
